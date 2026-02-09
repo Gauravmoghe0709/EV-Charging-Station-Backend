@@ -14,7 +14,12 @@ const app = express()
 app.use(express.json())
 app.use(cookieparser())
 app.use(cors({
-    origin:"https://ev-charging-station-t1c7.onrender.com/"  ,
+    origin:
+    [
+        "http://localhost:5173",
+        "https://ev-charging-station-t1c7.onrender.com/"  ,
+    ],
+
     credentials:true,
     
 }))
