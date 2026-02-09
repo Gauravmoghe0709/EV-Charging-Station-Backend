@@ -28,7 +28,9 @@ app.use("/EvStation",bookingsrouter)
 app.use("/EvStation/location",locationrouter)
 app.use("/EvStation/admin",analysisrouter)
 
-
+app.get("/", (req, res) => {
+  res.send("EVConnect Backend is Live 🚀");
+});
 
 
 module.exports = app
