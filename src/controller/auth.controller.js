@@ -55,7 +55,12 @@ async function loginuser(req, res) {
         }
 
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRATE)
-        res.cookie("token", token)
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "None",
+        });
+
 
         res.status(200).json({
             message: "login sucessfully..",
@@ -63,7 +68,7 @@ async function loginuser(req, res) {
                 _id: user._id,
                 name: user.name,
                 email: user.email,
-                role:user.role
+                role: user.role
             },
         })
     } catch (error) {
@@ -71,30 +76,30 @@ async function loginuser(req, res) {
     }
 
 }
-async function logout(req,res) {
+async function logout(req, res) {
     res.clearCookie("token")
     res.status(200).json({
-        message:"Logout sucessfully..."
+        message: "Logout sucessfully..."
     })
 }
 async function aboutme(req, res) {
-    
-     try {
-           const user = usermodel.findById(req.user.id)
 
-        if(!user){
+    try {
+        const user = usermodel.findById(req.user.id)
+
+        if (!user) {
             return res.status(401).json({
                 message: "user not exist"
             })
         }
-      
-    res.status(201).json({
-        message: "User Fetch sucessfully",
-        user:req.user
-    })
-     } catch (error) {
-      console.log(error)  
-     }
+
+        res.status(201).json({
+            message: "User Fetch sucessfully",
+            user: req.user
+        })
+    } catch (error) {
+        console.log(error)
+    }
 
 }
 
