@@ -25,7 +25,11 @@ async function registeruser(req, res) {
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRATE)
 
-    res.cookie("token", token)
+    res.cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "None",
+    });
 
     return res.status(201).json({
         message: "New user created sucessfully..."
@@ -77,7 +81,7 @@ async function loginuser(req, res) {
 
 }
 async function logout(req, res) {
-    res.clearCookie("token")
+    res.clearCookie("token", { httpOnly: true, secure: true, sameSite: "None" })
     res.status(200).json({
         message: "Logout sucessfully..."
     })
@@ -85,7 +89,7 @@ async function logout(req, res) {
 async function aboutme(req, res) {
 
     try {
-        const user = usermodel.findById(req.user.id)
+        const user = await usermodel.findById(req.user.id)
 
         if (!user) {
             return res.status(401).json({
