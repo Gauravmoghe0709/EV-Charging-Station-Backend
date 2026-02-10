@@ -1,6 +1,7 @@
-const express = require("express")
+const express = require ("express")
 const cookieparser = require ("cookie-parser")
 const cors = require("cors")
+const path = require("path")
 const authrouter = require ("../src/routers/auth.router")
 const stationmanagement = require ("../src/routers/stationmanagement.router")
 const findstationrouter = require ("../src/routers/findstation.router")
@@ -32,6 +33,12 @@ app.use("/EvStation/admin",analysisrouter)
 app.get("/", (req, res) => {
   res.send("EVConnect Backend is Live 🚀");
 });
+
+app.use(express.static(path.join(__dirname,"client/dist")))
+
+app.get("*",(req,res)=>{
+  res.sendFile(path.join(__dirname,"client/dist/index.html"))
+})
 
 
 module.exports = app
