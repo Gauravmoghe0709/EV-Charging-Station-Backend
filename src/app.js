@@ -10,16 +10,15 @@ const bookingsrouter = require ("../src/routers/bookings.router")
 const locationrouter = require ("../src/routers/location.route")
 const analysisrouter = require("../src/routers/analysis.router")
 const app = express()
-app.set("trust proxy", 1);
 
 app.use(express.json())
-app.use(cookieparser())
 
+app.set("trust proxy", 1);
 app.use(cors({
   origin: "https://ev-charging-station-t1c7.onrender.com",
   credentials: true
 }));
-
+app.use(cookieparser())
 
 app.use("/EvStation",authrouter)
 app.use("/EvStation/admin/", stationmanagement)

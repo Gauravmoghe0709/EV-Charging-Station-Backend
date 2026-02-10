@@ -62,7 +62,8 @@ async function loginuser(req, res) {
         res.cookie("token", token, {
             httpOnly: true,
             secure: true,
-            sameSite: "None",
+           sameSite: "none",
+           path: "/",
         });
 
 
@@ -81,7 +82,7 @@ async function loginuser(req, res) {
 
 }
 async function logout(req, res) {
-    res.clearCookie("token", { httpOnly: true, secure: true, sameSite: "None" })
+    res.clearCookie("token", { httpOnly: true, secure: true, sameSite: "none", })
     res.status(200).json({
         message: "Logout sucessfully..."
     })
